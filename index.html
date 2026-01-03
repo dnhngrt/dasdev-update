@@ -75,8 +75,7 @@
             opacity: 0;
             transform: translateY(20px);
             transition: opacity 0.4s ease-in-out, transform 0.4s ease-out;
-            display: none; /* Default hidden */
-            width: 100%;
+            /* Default state is hidden via class 'hidden' in HTML */
         }
 
         /* Active State (Visible) */
@@ -84,6 +83,11 @@
             opacity: 1;
             transform: translateY(0);
         }
+
+        /* Utility classes (Tailwind sudah punya, tapi kita pertegas) */
+        .hidden { display: none !important; }
+        .flex { display: flex !important; }
+        .block { display: block !important; }
 
         /* Ticker Animation Classes */
         .ticker-text {
@@ -338,56 +342,72 @@
     </div>
 
     <script>
-        // --- SMOOTH TAB SWITCHING ---
+        // --- FIXED SMOOTH TAB SWITCHING ---
         let isAnimating = false;
 
         function switchTab(tabName) {
-            if (isAnimating) return; // Cegah spam klik
+            // 1. Cegah klik ganda saat animasi berjalan
+            if (isAnimating) return;
             
-            const currentActive = document.querySelector('.content-section.active-view');
-            const targetSection = document.getElementById('content-' + tabName);
+            const targetId = 'content-' + tabName;
+            const targetSection = document.getElementById(targetId);
+            const currentActive = document.querySelector('.content-section:not(.hidden)'); // Cari yang sedang tampil
             const targetTab = document.getElementById('tab-' + tabName);
-            
-            // Jika klik tab yang sama, ignore
-            if (currentActive === targetSection) return;
+
+            // 2. Jika klik tab yang sedang aktif, abaikan
+            if (currentActive && currentActive.id === targetId) return;
 
             isAnimating = true;
 
-            // 1. Update Tab Style (Instant feedback)
+            // 3. Update Tampilan Tab (Langsung)
             document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
             targetTab.classList.add('active');
 
-            // 2. Fade Out Current Content
-            if (currentActive) {
-                currentActive.style.opacity = '0';
-                currentActive.style.transform = 'translateY(-20px)';
+            // Fungsi untuk memunculkan konten baru
+            const showNewContent = () => {
+                // Tentukan layout: Home & Contact butuh Flexbox (tengah), sisanya Block
+                const needsFlex = (tabName === 'home' || tabName === 'contact');
                 
-                setTimeout(() => {
-                    currentActive.classList.remove('active-view');
-                    currentActive.style.display = 'none'; // Sembunyikan sepenuhnya
-                    currentActive.classList.remove('flex'); // Hapus flex jika ada
-                    
-                    // 3. Prepare New Content
-                    if(tabName === 'home' || tabName === 'contact') {
-                        targetSection.style.display = 'flex'; // Gunakan flex untuk centering
-                    } else {
-                        targetSection.style.display = 'block';
-                    }
-                    
-                    // Force Reflow (Penting untuk transisi CSS)
-                    void targetSection.offsetWidth;
+                // Hapus class hidden
+                targetSection.classList.remove('hidden');
+                
+                // Set display type
+                if (needsFlex) {
+                    targetSection.classList.add('flex');
+                    targetSection.classList.remove('block');
+                } else {
+                    targetSection.classList.add('block');
+                    targetSection.classList.remove('flex');
+                }
 
-                    // 4. Fade In New Content
-                    targetSection.classList.add('active-view');
-                    
-                    isAnimating = false;
-                }, 400); // Waktu ini harus sama dengan CSS transition (0.4s)
-            } else {
-                // Initial load case
+                // Force Reflow (Trik browser agar sadar ada perubahan display sebelum animasi opacity)
+                void targetSection.offsetWidth;
+
+                // Mulai animasi masuk
                 targetSection.classList.add('active-view');
-                if(tabName === 'home' || tabName === 'contact') targetSection.style.display = 'flex';
-                else targetSection.style.display = 'block';
-                isAnimating = false;
+
+                // Selesai animasi
+                setTimeout(() => {
+                    isAnimating = false;
+                }, 400); 
+            };
+
+            // 4. Logika Transisi Keluar (Jika ada konten aktif)
+            if (currentActive) {
+                // Mulai animasi keluar
+                currentActive.classList.remove('active-view');
+                
+                // Tunggu animasi CSS selesai (400ms) baru sembunyikan total
+                setTimeout(() => {
+                    currentActive.classList.add('hidden');
+                    currentActive.classList.remove('flex', 'block'); // Bersihkan class layout
+                    
+                    // Panggil konten baru SETELAH konten lama hilang
+                    showNewContent();
+                }, 400);
+            } else {
+                // Jika pertama kali load (tidak ada konten aktif), langsung munculkan
+                showNewContent();
             }
         }
 
@@ -450,5 +470,6 @@
     </script>
 </body>
 </html>
+
 
 
