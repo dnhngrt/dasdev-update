@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -193,7 +193,7 @@
 
                 <div class="mt-10 flex gap-4">
                     <button onclick="switchTab('projects')" class="px-6 py-3 bg-blue-600 hover:bg-blue-500 hover:shadow-lg hover:shadow-blue-500/30 text-white rounded-lg font-bold transition duration-300 transform hover:-translate-y-1">
-                        Lihat Karya
+                        View Work
                     </button>
                     <a href="https://github.com/dnhngrt" target="_blank" class="px-6 py-3 border border-gray-600 hover:border-white text-gray-300 hover:text-white rounded-lg font-medium transition duration-300 hover:bg-gray-800">
                         <i class="fa-brands fa-github"></i> GitHub
@@ -211,7 +211,7 @@
                         </div>
                         <div class="p-6">
                             <h3 class="text-xl font-bold mb-2 text-white group-hover:text-blue-400 transition">OpsGuard</h3>
-                            <p class="text-gray-400 text-sm mb-4 line-clamp-3">Platform monitoring server dan website all-in-one untuk DevOps dengan notifikasi realtime ke Slack/Telegram.</p>
+                            <p class="text-gray-400 text-sm mb-4 line-clamp-3">All-in-one server and website monitoring platform for DevOps with real-time notifications to Slack/Telegram.</p>
                             <a href="https://dnhngrt.github.io/opsguard-test/" target="_blank" class="inline-flex items-center text-blue-400 hover:text-blue-300 text-sm font-medium">View Live Demo <i class="fa-solid fa-arrow-right ml-1"></i></a>
                         </div>
                     </div>
@@ -223,7 +223,7 @@
                         </div>
                         <div class="p-6">
                             <h3 class="text-xl font-bold mb-2 text-white group-hover:text-purple-400 transition">DasDev Portfolio</h3>
-                            <p class="text-gray-400 text-sm mb-4">Personal branding website dengan konsep minimalis khas developer.</p>
+                            <p class="text-gray-400 text-sm mb-4">Personal branding website with a minimalist developer-focused concept.</p>
                             <a href="https://dnhngrt.github.io/dasdev/" target="_blank" class="inline-flex items-center text-purple-400 hover:text-purple-300 text-sm font-medium">Visit Site <i class="fa-solid fa-arrow-right ml-1"></i></a>
                         </div>
                     </div>
@@ -235,7 +235,7 @@
                         </div>
                         <div class="p-6">
                             <h3 class="text-xl font-bold mb-2 text-white group-hover:text-pink-400 transition">Photo to Anime Style</h3>
-                            <p class="text-gray-400 text-sm mb-4">Landing page jasa ilustrasi digital dengan integrasi Gumroad checkout.</p>
+                            <p class="text-gray-400 text-sm mb-4">Landing page for digital illustration services with Gumroad checkout integration.</p>
                             <a href="https://dnhngrt.github.io/gumroad-phototoanime/" target="_blank" class="inline-flex items-center text-pink-400 hover:text-pink-300 text-sm font-medium">View Project <i class="fa-solid fa-arrow-right ml-1"></i></a>
                         </div>
                     </div>
@@ -277,10 +277,10 @@
                         </h2>
                         <div class="prose prose-invert max-w-none text-gray-300 leading-loose">
                             <p class="mb-4">
-                                Saya adalah seorang pengembang yang memiliki passion mendalam di dunia <strong>DevOps</strong> dan <strong>Web Development</strong>. Fokus utama saya adalah menciptakan sistem yang tidak hanya fungsional, tapi juga scalable, secure, dan reliable.
+                                I am a developer with a deep passion for <strong>DevOps</strong> and <strong>Web Development</strong>. My main focus is creating systems that are not only functional but also scalable, secure, and reliable.
                             </p>
                             <p class="mb-6">
-                                Dengan pengalaman membangun tools monitoring seperti <em>OpsGuard</em>, saya mengerti betapa pentingnya visibilitas dan otomatisasi dalam siklus pengembangan software modern.
+                                With experience building monitoring tools like <em>OpsGuard</em>, I understand the importance of visibility and automation in the modern software development cycle.
                             </p>
                             
                             <div class="bg-blue-600/10 border border-blue-500/30 p-6 rounded-xl relative overflow-hidden">
@@ -298,7 +298,7 @@
              <section id="content-contact" class="content-section min-h-full flex-col items-center justify-center p-8 text-center hidden">
                 <div class="max-w-xl w-full">
                     <h2 class="text-3xl font-bold mb-2">Let's Connect</h2>
-                    <p class="text-gray-400 mb-8">Punya proyek menarik atau ingin diskusi soal DevOps?</p>
+                    <p class="text-gray-400 mb-8">Have an interesting project or want to discuss DevOps?</p>
 
                     <div class="bg-gray-800 p-8 rounded-2xl border border-gray-700 shadow-2xl relative overflow-hidden group">
                         <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500"></div>
@@ -334,29 +334,29 @@
         let isAnimating = false;
 
         function switchTab(tabName) {
-            // 1. Cegah klik ganda saat animasi berjalan
+            // 1. Prevent double click during animation
             if (isAnimating) return;
             
             const targetId = 'content-' + tabName;
             const targetSection = document.getElementById(targetId);
-            const currentActive = document.querySelector('.content-section:not(.hidden)'); // Cari yang sedang tampil
+            const currentActive = document.querySelector('.content-section:not(.hidden)'); // Find currently visible section
             const targetTab = document.getElementById('tab-' + tabName);
 
-            // 2. Jika klik tab yang sedang aktif, abaikan
+            // 2. Ignore if clicking active tab
             if (currentActive && currentActive.id === targetId) return;
 
             isAnimating = true;
 
-            // 3. Update Tampilan Tab (Langsung)
+            // 3. Update Tab Appearance
             document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
             targetTab.classList.add('active');
 
-            // Fungsi untuk memunculkan konten baru
+            // Function to show new content
             const showNewContent = () => {
-                // Tentukan layout: Home & Contact butuh Flexbox (tengah), sisanya Block
+                // Determine layout: Home & Contact need Flexbox (center), others Block
                 const needsFlex = (tabName === 'home' || tabName === 'contact');
                 
-                // Hapus class hidden
+                // Remove hidden class
                 targetSection.classList.remove('hidden');
                 
                 // Set display type
@@ -368,33 +368,33 @@
                     targetSection.classList.remove('flex');
                 }
 
-                // Force Reflow (Trik browser agar sadar ada perubahan display sebelum animasi opacity)
+                // Force Reflow
                 void targetSection.offsetWidth;
 
-                // Mulai animasi masuk
+                // Start enter animation
                 targetSection.classList.add('active-view');
 
-                // Selesai animasi
+                // Animation complete
                 setTimeout(() => {
                     isAnimating = false;
                 }, 400); 
             };
 
-            // 4. Logika Transisi Keluar (Jika ada konten aktif)
+            // 4. Exit Transition Logic (If content is active)
             if (currentActive) {
-                // Mulai animasi keluar
+                // Start exit animation
                 currentActive.classList.remove('active-view');
                 
-                // Tunggu animasi CSS selesai (400ms) baru sembunyikan total
+                // Wait for CSS animation (400ms) then hide completely
                 setTimeout(() => {
                     currentActive.classList.add('hidden');
-                    currentActive.classList.remove('flex', 'block'); // Bersihkan class layout
+                    currentActive.classList.remove('flex', 'block'); // Clean up layout classes
                     
-                    // Panggil konten baru SETELAH konten lama hilang
+                    // Call new content AFTER old content is gone
                     showNewContent();
                 }, 400);
             } else {
-                // Jika pertama kali load (tidak ada konten aktif), langsung munculkan
+                // Initial load case
                 showNewContent();
             }
         }
@@ -409,7 +409,7 @@
         ];
 
         let currentIndex = 0;
-        const TIMER_DURATION = 60000; // 1 Menit per tool
+        const TIMER_DURATION = 60000; // 1 Minute per tool
 
         function updateTool() {
             const tool = devOpsTools[currentIndex];
@@ -446,7 +446,7 @@
                 progressEl.style.transition = `width ${TIMER_DURATION}ms linear`;
                 progressEl.style.width = '100%';
 
-            }, 600); // Tunggu animasi exit selesai (0.6s)
+            }, 600); // Wait for exit animation (0.6s)
 
             currentIndex = (currentIndex + 1) % devOpsTools.length;
         }
@@ -458,6 +458,3 @@
     </script>
 </body>
 </html>
-
-
-
